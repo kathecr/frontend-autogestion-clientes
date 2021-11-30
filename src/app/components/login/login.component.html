@@ -1,24 +1,80 @@
-<div class="container d-flex h-100 align-items-center">
-  <form class="col-lg-6 col-xl-6 col-8 mx-auto" [formGroup]="form" (ngSubmit)="login($event)">
-    <mat-card class="border border-primary">
-      <mat-card-header class="d-flex justify-content-center">
-        <mat-card-title>Inicia Sesión 😄</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="row">
-          <mat-form-field>
-            <input placeholder="Correo o Usuario" formControlName="email" matInput type="email">
-          </mat-form-field>
+<div class="flex justify-end h-screen">
+  <div class="flex flex-grow justify-center">
+    <form class="" [formGroup]="form" (ngSubmit)="login($event)">
+      <div class="flex flex-col items-center">
+        <div class="w-full">
+          <mat-icon
+            class="
+              text-9xl text-green-800
+              my-24
+              flex
+              justify-center
+              bg-gray-200
+            "
+            >book</mat-icon
+          >
         </div>
-        <div class="row">
-          <mat-form-field>
-            <input placeholder="Contraseña" formControlName="password" matInput type="password">
-          </mat-form-field>
-        </div>
-      </mat-card-content>
-      <mat-card-actions class="d-flex justify-content-center">
-        <button mat-button color="primary" [disabled]="form.invalid" mat-raised-button type="submit">Ingresar</button>
-      </mat-card-actions>
-    </mat-card>
-  </form>
+        <mat-card-header class="d-flex justify-content-center">
+          <mat-card-title class="text-green-800"
+            >Modulo de Soporte de Contatech</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content class="w-full">
+          <div class="w-full">
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Nit</mat-label>
+              <input
+                matInput
+                placeholder="Nit"
+                formControlName="email"
+                matInput
+                type="email"
+              />
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="w-full">
+            <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input
+                placeholder="Contraseña"
+                formControlName="password"
+                matInput
+                type="password"
+              />
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="w-full">
+          <div class="mt-4">
+            <button
+              class="w-full text-green-800 bg-yellow-300"
+              mat-button
+              
+              mat-raised-button
+              type="submit"
+            >
+              Ingresar
+            </button>
+          </div>
+          <span class="text-red-600 flex justify-center">¿Olvidaste tu contraseña?</span>
+          <div class="my-4">
+            <button
+              class="w-full bg-green-800 text-yellow-300"
+              mat-button
+              mat-raised-button
+              type="submit"
+            >
+              Comprar Licencia
+            </button>
+          </div>
+        </mat-card-actions>
+      </div>
+    </form>
+  </div>
+  <img
+    class=""
+    src="../../../../assets/images/pexels-tima-miroshnichenko-6694542.jpg"
+  />
 </div>
