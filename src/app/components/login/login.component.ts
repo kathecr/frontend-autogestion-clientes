@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 //import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 //import swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    //  private authService: AuthService, 
+    private authService: AuthService, 
     //  public dialog: MatDialog
   ) {
     this.form = this.formBuilder.group({
@@ -27,23 +28,23 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   login(event: Event) {
-    // event.preventDefault();
-    // if (this.form.valid) {
-    //   const value = this.form.value;
-    //   this.authService.login(value.email, value.password).subscribe({
-    //     next: () => {
-    //       this.router.navigate(['/main']);
-    //     },
-    //     error: (error) => {
-    //       console.log(error)
-    //       swal.fire(
-    //         `Inicio fallido ${error.status}`,
-    //         'Verifica la información e intentalo de nuevo',
-    //         'error'
-    //       );
-    //     },
-    //   });
-    // }
+    event.preventDefault();
+    // (this.form.valid) {
+      const value = this.form.value;
+      this.authService.login(value.nit, value.clave).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          console.log(error)
+//          swal.fire(
+  //        `Inicio fallido ${error.status}`,
+    //      'Verifica la información e intentalo de nuevo',
+      //      'error'
+        //  );
+        },
+      });
+    //}
   }
 
   openDialog(): void {

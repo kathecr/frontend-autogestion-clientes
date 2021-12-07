@@ -25,35 +25,33 @@ export class AuthService {
     username: '',
     role: '',
     email: '',
+    nit: ''
   };
 
   role = 'none';
 
+  login(nit: string, password: string) {
+    return this.http
+      .post(
+        `${environment.url}/api/authenticate`,
+        {nit: nit , clave: password}
+      )
+      .pipe(
+        tap((response: any) => {
+          //this.user = response.result.user;
+          //sessionStorage.setItem('token', response.result.token);
+          console.log(response)
+        })
+      );
+  }
   createUser(user: UserModel) {
     const token = sessionStorage.getItem('token');
-    return this.http.post(`${environment.url}/users`, user, {
+    return this.http.post(`${environment.url}/user`, user, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
 
-  login(email: string, password: string) {
-    return this.http
-      .post(
-        `${environment.url}/auth/sign-in`,
-        {},
-        {
-          headers: { Authorization: 'Basic ' + btoa(email + ':' + password) },
-        }
-      )
-      .pipe(
-        tap((response: any) => {
-          this.user = response.result.user;
-          this.role = response.result.role;
-          sessionStorage.setItem('role', this.role);
-          sessionStorage.setItem('token', response.result.token);
-        })
-      );
-  }
+
 
   logout() {
     this.user = {
@@ -61,6 +59,7 @@ export class AuthService {
       username: '',
       role: '',
       email: '',
+      nit: ''
     };
     this.role = 'node';
     sessionStorage.clear();
