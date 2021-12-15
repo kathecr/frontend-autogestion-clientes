@@ -1,0 +1,16 @@
+<div>
+  {{ tutorial.titulo }}
+  <mat-start-rating [rating]="tutorial.calificacion"></mat-start-rating>
+  {{ tutorial.descripcion }}
+  <table border="1">
+    <tr>
+      <td>Reseñas</td>
+    </tr>
+    <tr *ngFor="let rating of ratings">
+      <td>
+        {{ rating.resena
+        }}<mat-start-rating [rating]="rating.calificacion"></mat-start-rating>
+      </td>
+    </tr>
+  </table>
+</div>

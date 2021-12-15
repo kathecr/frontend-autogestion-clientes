@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 //import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-//import swal from 'sweetalert2';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
+import swal from 'sweetalert2';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -12,6 +13,9 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  faBook = faBook;
+  admin = false;
+  tipoInput = "number"
   form: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -33,18 +37,28 @@ export class LoginComponent implements OnInit {
       const value = this.form.value;
       this.authService.login(value.nit, value.clave).subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           console.log(error)
-//          swal.fire(
-  //        `Inicio fallido ${error.status}`,
-    //      'Verifica la información e intentalo de nuevo',
-      //      'error'
-        //  );
+          swal.fire(
+            `Inicio fallido ${error.status}`,
+            'Verifica la información e intentalo de nuevo',
+            'error'
+          );
         },
       });
-    //}
+    
+  }
+  toggle(): void {
+    console.log(this.admin)
+  }
+
+  onUsernameChange(e: any){
+    const username = this.form.controls.nit.value;
+    console.log(username)
+    this.form.controls.nit.setValue(username+"2")
+    console.log(e)
   }
 
   openDialog(): void {

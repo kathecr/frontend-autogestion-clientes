@@ -5,9 +5,11 @@ import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/models/User.model';
+import { TokenService } from 'src/app/services/token/token.service';
 
 interface ResponseLogin {
   error: string;
+  token: string;
   result: {
     token: string;
     user: UserModel;
@@ -19,39 +21,37 @@ interface ResponseLogin {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private tokenService: TokenService
+  ) {}
   user = {
     id: 0,
     username: '',
     role: '',
     email: '',
-    nit: ''
+    nit: '',
   };
 
   role = 'none';
 
   login(nit: string, password: string) {
     return this.http
-      .post(
-        `${environment.url}/api/authenticate`,
-        {nit: nit , clave: password}
-      )
+      .post(`${environment.url}/authenticate`, {
+        username: nit,
+        password: password,
+      })
       .pipe(
         tap((response: any) => {
-          //this.user = response.result.user;
-          //sessionStorage.setItem('token', response.result.token);
-          console.log(response)
+          this.tokenService.saveToken(response.token);
         })
       );
-  }
+  }                                    
+
   createUser(user: UserModel) {
-    const token = sessionStorage.getItem('token');
-    return this.http.post(`${environment.url}/user`, user, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return this.http.post(`${environment.url}/user`, user);
   }
-
-
 
   logout() {
     this.user = {
@@ -59,7 +59,7 @@ export class AuthService {
       username: '',
       role: '',
       email: '',
-      nit: ''
+      nit: '',
     };
     this.role = 'node';
     sessionStorage.clear();

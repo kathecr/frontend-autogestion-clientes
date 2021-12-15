@@ -1,30 +1,35 @@
 <div class="flex justify-end h-screen">
   <div class="flex flex-grow justify-center">
-    <form class="" [formGroup]="form" (ngSubmit)="login($event)">
-      <div class="flex flex-col items-center">
-        <div class="w-full">
-          <mat-icon
-            class="
-              text-9xl text-green-800
-              my-24
-              flex
-              justify-center
-              bg-gray-200
-            "
-            >book</mat-icon
-          >
-        </div>
-        <mat-card-header class="d-flex justify-content-center">
-          <mat-card-title class="text-green-800"
-            >Modulo de Soporte de Contatech</mat-card-title
-          >
-        </mat-card-header>
+    <div class="flex flex-col items-center">
+      <div class="w-full">
+        <fa-icon
+          [icon]="faBook"
+          size="7x"
+          class="text-green-800 mb-10 mt-20 flex justify-center"
+        ></fa-icon>
+      </div>
+      <mat-card-header class="d-flex justify-content-center">
+        <mat-card-title class="text-green-800"
+          >Modulo de Soporte de Contatech</mat-card-title
+        >
+      </mat-card-header>
+      <div class="my-4">
+        <span class="mx-4 text-gray-500">Administrador</span>
+        <mat-slide-toggle
+          [(ngModel)]="admin"
+          color="primary"
+          (change)="toggle()"
+        ></mat-slide-toggle>
+      </div>
+      <form class="w-full" [formGroup]="form" (ngSubmit)="login($event)">
         <mat-card-content class="w-full">
           <div class="w-full">
             <mat-form-field class="w-full" appearance="outline">
               <mat-label>Nit</mat-label>
               <input
                 matInput
+                autocomplete="off"
+                (keyup)="onUsernameChange($event)"
                 placeholder="Nit"
                 formControlName="nit"
                 type="text"
@@ -56,7 +61,9 @@
               Ingresar
             </button>
           </div>
-          <span class="text-red-600 flex justify-center">¿Olvidaste tu contraseña?</span>
+          <span class="text-red-600 flex justify-center"
+            >¿Olvidaste tu contraseña?</span
+          >
           <div class="my-4">
             <button
               class="w-full bg-green-800 text-yellow-300"
@@ -68,8 +75,8 @@
             </button>
           </div>
         </mat-card-actions>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
   <img
     class=""

@@ -21,10 +21,10 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   addToken(request: HttpRequest<unknown>){
-    const token = this.tokenService.getToken()
+    const token = this.tokenService.getToken();
     if(token){
       request = request.clone({
-        setHeaders:{Authorization: `Bearer ${token}`}
+        setHeaders:{ 'Authorization': `Bearer ${token}`}
       })
     }
     return request
