@@ -30,9 +30,12 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { StartRatingComponent } from './components/start-rating/start-rating.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
+import { TutorialDetailsComponent, Qualifier } from './components/tutorial-details/tutorial-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
+import { EnterpriseComponent } from './components/enterprise/enterprise.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MainLayoutComponent,
     StartRatingComponent,
     TutorialDetailsComponent,
+    Qualifier,
+    AdminLayoutComponent,
+    EnterpriseComponent,
+    HomeAdminComponent
   ],
+  entryComponents: [StartRatingComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

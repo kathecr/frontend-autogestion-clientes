@@ -26,13 +26,6 @@ export class AuthService {
     private router: Router,
     private tokenService: TokenService
   ) {}
-  user = {
-    id: 0,
-    username: '',
-    role: '',
-    email: '',
-    nit: '',
-  };
 
   role = 'none';
 
@@ -47,36 +40,24 @@ export class AuthService {
           this.tokenService.saveToken(response.token);
         })
       );
-  }                                    
-
-  createUser(user: UserModel) {
-    return this.http.post(`${environment.url}/user`, user);
   }
 
   logout() {
-    this.user = {
-      id: 0,
-      username: '',
-      role: '',
-      email: '',
-      nit: '',
-    };
-    this.role = 'node';
-    sessionStorage.clear();
+    this.tokenService.removeToken();
+    localStorage.removeItem('idEmpresa');
+    this.saveRole('none');
     this.router.navigateByUrl('/');
   }
 
-  hasUser() {
-    return of(sessionStorage.getItem('token'));
+  saveRole(role: string) {
+    this.role = role;
+    localStorage.setItem('role', role);
   }
 
   getRole() {
-    if (this.role === 'none') {
-      this.role = String(sessionStorage.getItem('role'));
+    if (this.role == 'none') {
+      this.role = String(localStorage.getItem('role'));
     }
     return this.role;
-  }
-  getAuth() {
-    return sessionStorage.getItem('token');
   }
 }

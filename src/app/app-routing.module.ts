@@ -4,7 +4,9 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
 import { MainLayoutComponent} from './components/main-layout/main-layout.component'
-
+import { EnterpriseComponent } from './components/enterprise/enterprise.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +18,14 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'tutorial-details/:id', component: TutorialDetailsComponent },
+    ]
+  },
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      { path: 'home', component: HomeAdminComponent},
+      { path: 'enterprise', component: EnterpriseComponent },
     ]
   },
 ];
