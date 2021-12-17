@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TutorialModel } from 'src/app/models/Tutorial.model';
 import { TutorialService } from 'src/app/services/tutorial/tutorial.service';
 import { TutorialsModel } from 'src/app/models/Tutorials.model';
-import { StartRatingComponent } from '../start-rating/start-rating.component';
+import { EnterpriseService } from 'src/app/services/enterprise/enterprise.service';
+import { ClickModel } from 'src/app/models/Click.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,23 +12,24 @@ import { StartRatingComponent } from '../start-rating/start-rating.component';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  /* tutorials: TutorialsModel = {
-    tutoriales: [],
-    currentPage: 0,
-    totalItems: 0,
-    totalPages: 0,
-  }; */
-  rating:number = 3;
-  starCount:number = 5;
+  click: ClickModel = {
+    idEmpresa: 0,
+    idTutorial: 0,
+  };
+  rating: number = 3;
+  starCount: number = 5;
 
   tutorials: TutorialModel[] = [];
   currentPage: number = 0;
   totalItems: number = 0;
   totalPages: number = 0;
 
-  constructor(private tutorialService: TutorialService) {}
+  constructor(
+    private tutorialService: TutorialService,
+    private enterpriseService: EnterpriseService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
-    
     this.tutorialService.getTutorials().subscribe((data) => {
       this.tutorials = data.tutoriales;
       this.currentPage = data.currentPage;
@@ -34,8 +37,12 @@ export class HomeComponent implements OnInit {
       this.totalPages = data.totalPages;
     });
   }
-  onRatingChanged(rating:any){
-    console.log(rating);
-    this.rating = rating;
+  sendClick(idTutorial: number): void {
+    this.click.idEmpresa = this.enterpriseService.enterprise.idEmpresa;
+    this.click.idTutorial = idTutorial;
+    this.tutorialService.postClick(this.click).subscribe({
+      next: () =>
+        this.router.navigateByUrl('/user/tutorial-details/' + idTutorial),
+    });
   }
 }

@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Hola {{data.nombre}}</h1>
+<div mat-dialog-content>
+  <p>
+    Lamentamos informarte que tu licencia se encuentra vencida, ¿Te gustaría ser
+    contactado por nuestra area comercial para realizaar la renovación?
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    mat-button
+    mat-raised-button
+    class="w-full text-green-800 bg-yellow-300"
+    (click)="contact()"
+  >
+    Si
+  </button>
+  <button
+    mat-button
+    class="w-full bg-green-800 text-yellow-300"
+    (click)="onNoClick()"
+  >
+    No
+  </button>
+</div>

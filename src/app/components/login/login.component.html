@@ -21,7 +21,7 @@
           (change)="toggle()"
         ></mat-slide-toggle>
       </div>
-      <form class="w-full" [formGroup]="form" (ngSubmit)="login($event)">
+      <form class="w-full" [formGroup]="form" (ngSubmit)="login()">
         <mat-card-content class="w-full">
           <div class="w-full">
             <mat-form-field class="w-full" appearance="outline">
@@ -29,12 +29,14 @@
               <input
                 matInput
                 autocomplete="off"
+                [pattern]="pattern"
                 (keyup)="onUsernameChange($event)"
                 placeholder="Nit"
+                maxlength="11"
                 formControlName="nit"
                 type="text"
               />
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>ejemplo: 123456789-1</mat-hint>
             </mat-form-field>
           </div>
           <div class="w-full">
@@ -43,39 +45,45 @@
               <input
                 placeholder="Contraseña"
                 formControlName="clave"
+                maxlength="8"
+                minlength="6"
                 matInput
                 type="password"
               />
-              <mat-hint>Hint</mat-hint>
+              <mat-hint>contraseña: ******</mat-hint>
             </mat-form-field>
           </div>
         </mat-card-content>
+
         <mat-card-actions class="w-full">
           <div class="mt-4">
             <button
               class="w-full text-green-800 bg-yellow-300"
               mat-button
               mat-raised-button
+              [disabled]="!form.valid"
               type="submit"
             >
               Ingresar
             </button>
-          </div>
-          <span class="text-red-600 flex justify-center"
-            >¿Olvidaste tu contraseña?</span
-          >
-          <div class="my-4">
-            <button
-              class="w-full bg-green-800 text-yellow-300"
-              mat-button
-              mat-raised-button
-              type="submit"
-            >
-              Comprar Licencia
-            </button>
-          </div>
-        </mat-card-actions>
+          </div></mat-card-actions
+        >
       </form>
+      <mat-card-actions class="w-full">
+        <span class="text-red-600 flex justify-center"
+          >¿Olvidaste tu contraseña?</span
+        >
+        <div class="my-4">
+          <button
+            class="w-full bg-green-800 text-yellow-300"
+            mat-button
+            mat-raised-button
+            (click)="openDialogBuyLicense()"
+          >
+            Comprar Licencia
+          </button>
+        </div>
+      </mat-card-actions>
     </div>
   </div>
   <img

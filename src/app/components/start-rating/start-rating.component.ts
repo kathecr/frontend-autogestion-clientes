@@ -11,7 +11,6 @@ export class StartRatingComponent implements OnInit {
   @Input() rating: number = 0; 
   @Input() disabled: boolean = true;
   starCount: number = 5;
-  //@Input() color: string = 'accent';
   @Output() ratingUpdated = new EventEmitter();
 
   snackBarDuration: number = 2000;

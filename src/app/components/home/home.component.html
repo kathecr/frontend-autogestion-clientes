@@ -1,17 +1,35 @@
-<div>
+<div class="flex justify-center bg-gray-100">
   <table border="1">
     <tr>
-      <td>Tutoriales</td>
+      <td><h1 class="font-bold text-4xl my-4">Tutoriales</h1></td>
     </tr>
     <tr *ngFor="let tutorial of tutorials">
       <td>
-        <a [routerLink]="['/user/tutorial-details', tutorial.idTutorial]">
-          {{ tutorial.titulo
-          }}<mat-start-rating
-            [rating]="tutorial.calificacion"
-          ></mat-start-rating>
-        </a>
+        <div
+          (click)="sendClick(tutorial.idTutorial)"
+        >
+          <mat-card>
+            <mat-card-title>{{ tutorial.titulo | titlecase}}</mat-card-title>
+            <div class = "flex items-center justify-between">
+              <mat-start-rating
+                [rating]="tutorial.calificacion"
+              ></mat-start-rating>
+              <mat-card-subtitle
+                >{{ tutorial.numeroCalificaciones }} calificaciones
+              </mat-card-subtitle>
+            </div>
+          </mat-card>
+        </div>
       </td>
     </tr>
   </table>
 </div>
+
+<!-- <mat-card>
+  <mat-card-title>Shiba Inu</mat-card-title>
+  <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+  <mat-card-content>
+    <p>This card indeterminates progress bar.</p>
+    <p>{{ longText }}</p>
+  </mat-card-content>
+</mat-card> -->

@@ -1,16 +1,44 @@
-<div>
-  {{ tutorial.titulo }}
-  <mat-start-rating [rating]="tutorial.calificacion"></mat-start-rating>
-  {{ tutorial.descripcion }}
-  <table border="1">
-    <tr>
-      <td>Reseñas</td>
-    </tr>
-    <tr *ngFor="let rating of ratings">
-      <td>
-        {{ rating.resena
-        }}<mat-start-rating [rating]="rating.calificacion"></mat-start-rating>
-      </td>
-    </tr>
-  </table>
+<div class="flex justify-center bg-gray-100">
+  <mat-card class="md:w-9/12 my-4">
+    <mat-card-title> {{ tutorial.titulo | titlecase }}</mat-card-title>
+
+    <mat-start-rating [rating]="tutorial.calificacion"></mat-start-rating>
+    <p class = "text-justify my-4">
+      {{ tutorial.descripcion }}
+    </p>
+    <button
+      class="w-full text-green-800 bg-yellow-300"
+      mat-button
+      mat-raised-button
+      (click)="openQualifier()"
+    >
+      Calificar
+    </button>
+    <div class="mt-6">
+      <table border="1 mt-6 ">
+        <tr class="my-4">
+          <td><mat-card-title>Reseñas</mat-card-title></td>
+        </tr>
+        <tr *ngFor="let rating of ratings" class="my-6">
+          <td class="my-4">
+            <div class="flex justify-between">
+              <div>
+                <p class="text-gray-500">
+                  {{ rating.nombreEmpresa | uppercase }}
+                </p>
+                <p class="text-xs">{{ rating.fechaCalificacion }}</p>
+              </div>
+              <mat-start-rating
+                [rating]="rating.calificacion"
+              ></mat-start-rating>
+            </div>
+            <div class="my-4">
+              <span>{{ rating.resena }}</span>
+            </div>
+            <mat-divider></mat-divider>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </mat-card>
 </div>

@@ -1,0 +1,15 @@
+<div>
+  <h1 mat-dialog-title>Califica este tutorial</h1>
+  <mat-start-rating [disabled]="disabled" [rating]= "rating.calificacion" (ratingUpdated)="onRatingChanged($event)"></mat-start-rating>
+  <p class="text-gray-500 text-xs">
+    Presiona una estrella para valor este tutorial
+  </p>
+  <mat-form-field appearance="outline" class="w-full my-4">
+    <mat-label>Tu opinión</mat-label>
+    <textarea matInput autocomplete="off" rows="6" [(ngModel)]="rating.resena"></textarea>
+  </mat-form-field>
+  <div class = "flex justify-around">
+    <button mat-button class="bg-green-800 text-yellow-300" (click) = "onNoClick()">Cancelar</button>
+    <button mat-button class="text-green-800 bg-yellow-300" (click)="sendRating()">Enviar</button>
+  </div>
+</div>
