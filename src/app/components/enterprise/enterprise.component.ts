@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { EnterpriseModel } from 'src/app/models/Enterprise.model';
 import { EnterpriseService } from 'src/app/services/enterprise/enterprise.service';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -9,9 +9,10 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './enterprise.component.html',
   styleUrls: ['./enterprise.component.css'],
 })
-export class EnterpriseComponent implements AfterViewInit{
+export class EnterpriseComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  dataSource!: MatTableDataSource<EnterpriseModel>;
+  pageEvent!: PageEvent;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
   //dataSource:any;
   enterprises: EnterpriseModel[] = [];
   displayedColumns: string[] = [
@@ -26,17 +27,20 @@ export class EnterpriseComponent implements AfterViewInit{
 
   constructor(private enterpriseService: EnterpriseService) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.enterpriseService.getEnterpriseAll().subscribe((res) => {
+    
+    this.enterpriseService.getEnterpriseAll().subscribe((res: any) => {
       this.enterprises = res;
-      this.dataSource.data = res
-      console.log(this.dataSource)
-      console.log(res)
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      console.log(this.dataSource.data);
     });
     //this.dataSource.paginator = this.paginator;
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
