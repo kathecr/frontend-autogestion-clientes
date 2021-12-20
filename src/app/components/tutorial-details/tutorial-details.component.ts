@@ -87,7 +87,7 @@ export class Qualifier {
       this.rating.idEmpresa = this.enterpriseService.getEnterprise();
       this.tutorialService.postRating(this.rating).subscribe({
         next: () => {
-          this.onNoClick();
+          this.dialogRef.close();
         },
       });
     }

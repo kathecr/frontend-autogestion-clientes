@@ -26,11 +26,12 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-enterprise',
-  templateUrl: './enterprise.component.html',
-  styleUrls: ['./enterprise.component.css'],
+  selector: 'app-agent',
+  templateUrl: './agent.component.html',
+  styleUrls: ['./agent.component.css']
 })
-export class EnterpriseComponent implements AfterViewInit {
+export class AgentComponent implements AfterViewInit {
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageEvent!: PageEvent;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
@@ -69,14 +70,14 @@ export class EnterpriseComponent implements AfterViewInit {
   }
 
   openEdit(enterprise: EnterpriseModel) {
-    const dialogRef = this.dialog.open(EditEnterprise, {
+    const dialogRef = this.dialog.open(EditAgent, {
       width: '500px',
       data: enterprise,
     });
   }
 
   openCreated() {
-    const dialogRef = this.dialog.open(CreatedEnterprise, {
+    const dialogRef = this.dialog.open(CreatedAgent, {
       width: '500px',
     });
     dialogRef
@@ -91,10 +92,10 @@ export class EnterpriseComponent implements AfterViewInit {
 }
 //------ COMPONENT CREATED ---------//
 @Component({
-  selector: 'created-enterprise',
-  templateUrl: 'created-enterprise.html',
+  selector: 'created-agent',
+  templateUrl: 'created-agent.html',
 })
-export class CreatedEnterprise {
+export class CreatedAgent {
   enterprise: CreateEnterpriseModel = {
     nombre: '',
     clave: '',
@@ -117,7 +118,7 @@ export class CreatedEnterprise {
   pattern: string = '(^[0-9]+-{1}[0-9]{1})';
 
   constructor(
-    public dialogRef: MatDialogRef<EditEnterprise>,
+    public dialogRef: MatDialogRef<EditAgent>,
     @Inject(MAT_DIALOG_DATA) public data: EnterpriseModel,
     private formBuilder: FormBuilder,
     private enterpriseService: EnterpriseService
@@ -153,10 +154,10 @@ export class CreatedEnterprise {
 }
 //------ COMPONENT EDIT ---------//
 @Component({
-  selector: 'edit-enterprise',
-  templateUrl: 'edit-enterprise.html',
+  selector: 'edit-agent',
+  templateUrl: 'edit-agent.html',
 })
-export class EditEnterprise {
+export class EditAgent {
   enterprise: EnterpriseModel = {
     idEmpresa: 0,
     nombre: '',
@@ -181,7 +182,7 @@ export class EditEnterprise {
   pattern: string = '(^[0-9]+-{1}[0-9]{1})';
 
   constructor(
-    public dialogRef: MatDialogRef<EditEnterprise>,
+    public dialogRef: MatDialogRef<EditAgent>,
     @Inject(MAT_DIALOG_DATA) public data: EnterpriseModel,
     private formBuilder: FormBuilder,
     private enterpriseService: EnterpriseService

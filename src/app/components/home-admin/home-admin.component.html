@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 mx-32">
-  <a [routerLink]="['/admin']">
+  <a [routerLink]="['/admin/agent']">
     <mat-card class="bg-green-700">
       <div class="text-yellow-400 flex justify-center items-center">
         <fa-icon [icon]="iconAgent" size="4x" class=""></fa-icon>
@@ -15,13 +15,14 @@
       </div>
     </mat-card>
   </a>
-
-  <mat-card class="bg-green-700">
-    <div class="text-yellow-400 flex justify-center items-center">
-      <fa-icon [icon]="iconRequest" size="4x" class=""></fa-icon>
-      <span class="text-4xl m-4"> Solicitudes </span>
-    </div>
-  </mat-card>
+  <a [routerLink]="['/admin/request']">
+    <mat-card class="bg-green-700">
+      <div class="text-yellow-400 flex justify-center items-center">
+        <fa-icon [icon]="iconRequest" size="4x" class=""></fa-icon>
+        <span class="text-4xl m-4"> Solicitudes </span>
+      </div>
+    </mat-card>
+  </a>
   <mat-card class="bg-green-700">
     <div class="text-yellow-400 flex justify-center items-center">
       <fa-icon [icon]="iconTutorial" size="4x" class=""></fa-icon>

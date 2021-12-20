@@ -1,0 +1,103 @@
+<div>
+  <form class="w-full" [formGroup]="form" (ngSubmit)="created()">
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input
+          autocomplete= "off"
+          placeholder="Nombre"
+          formControlName="nombre"
+          maxlength="20"
+          matInput
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Nit</mat-label>
+        <input
+          matInput
+          (keyup)="onUsernameChange($event)"
+          autocomplete="off"
+          [pattern]="pattern"
+          placeholder="Nit"
+          maxlength="11"
+          formControlName="nit"
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            placeholder="Contraseña"
+            maxlength="10"
+            formControlName="clave"
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Celular</mat-label>
+        <input
+          placeholder="Celular"
+          formControlName="celular"
+          maxlength="10"
+          minlength="10"
+          matInput
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input
+          placeholder="Correo"
+          formControlName="correo"
+          matInput
+          type="email"
+        />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Licencia</mat-label>
+      <mat-select formControlName="licencia">
+        <mat-option value="activa">Activa</mat-option>
+        <mat-option value="vencida">Vencida</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="w-full">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input
+            placeholder="2020-01-30"
+            formControlName="fecha"
+            matInput
+            minlength="10"
+            maxlength="10"
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+
+    <div class="mt-4">
+      <button
+        class="w-full text-green-800 bg-yellow-300"
+        mat-button
+        mat-raised-button
+        [disabled]="!form.valid"
+        type="submit"
+      >
+        Crear
+      </button>
+    </div>
+  </form>
+</div>
