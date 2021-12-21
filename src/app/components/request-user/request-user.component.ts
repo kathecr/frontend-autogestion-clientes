@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestService } from 'src/app/services/request/request.service';
 import { EnterpriseService } from 'src/app/services/enterprise/enterprise.service';
 import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { AreaService } from 'src/app/services/area/area.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-request-user',
   templateUrl: './request-user.component.html',
@@ -12,7 +15,7 @@ import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
 export class RequestUserComponent implements OnInit {
   iconRequest = faBriefcase;
   request: CreateRequestModel = {
-    asunto: "",
+    asunto: '',
     caso: '',
     idArea: 0,
     idEmpresa: 0,
@@ -27,19 +30,29 @@ export class RequestUserComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private requestService: RequestService,
-    private enterpriseService: EnterpriseService
+    private enterpriseService: EnterpriseService,
+    private areaService: AreaService,
+    private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    console.log(this.enterpriseService.getEnterprise)
-  }
-  post(){
+  ngOnInit(): void {}
 
-    const value= this.form.value;
+  post() {
+    const value = this.form.value;
+
     this.request.asunto = value.asunto;
     this.request.caso = value.caso;
-    console.log(this.enterpriseService.getEnterprise)
-    this.requestService.postRquest(this.request);
+    this.request.idEmpresa = this.enterpriseService.getEnterprise();
+    this.areaService.getAgentAll().subscribe((data) => {
+      this.areaService.getAgentAll().subscribe((data) => {
+        const idArea = data.filter((item) => item.nombre == value.area)[0].idArea;
+        this.request.idArea = idArea;
+        this.requestService.postRquest(this.request).subscribe(data=>{this.form.reset()
+          this.snackBar.open('Solicitud enviada exitosamente', '', {
+            duration: 3000
+          });});
+      });
+    });
+    
   }
-
 }
