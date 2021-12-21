@@ -1,0 +1,57 @@
+<div>
+  <form class="grid grid-cols-3" [formGroup]="form" (ngSubmit)="post()">
+    <div></div>
+    <div>
+      <div class="w-full my-4">
+        <div class="text-green-800 flex justify-center items-center">
+          <fa-icon [icon]="iconRequest" size="4x" class=""></fa-icon>
+          <span class="text-4xl m-4"> Solicitud </span>
+        </div>
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Titulo</mat-label>
+          <input
+            placeholder="Resume tu inconvenite"
+            formControlName="asunto"
+            autocomplete="off"
+            matInput
+            type="text"
+          />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>¿En que area tienes inconvenientes?</mat-label>
+        <mat-select formControlName="area">
+          <mat-option value="Nomina">Nomina</mat-option>
+          <mat-option value="Activos">Activos</mat-option>
+          <mat-option value="Pasivos">Pasivos</mat-option>
+          <mat-option value="Caja Menor">Caja Menor</mat-option>
+          <mat-option value="Inversiones">Inversiones</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full my-4">
+        <mat-label>Descripción de tu problema</mat-label>
+        <textarea
+          matInput
+          autocomplete="off"
+          rows="6"
+          formControlName="caso"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="mt-4">
+        <button
+          class="w-full text-green-800 bg-yellow-300"
+          mat-button
+          mat-raised-button
+          [disabled]="!form.valid"
+          type="submit"
+        >
+          Enviar Solicitud
+        </button>
+      </div>
+    </div>
+    <div></div>
+  </form>
+</div>
