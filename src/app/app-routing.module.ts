@@ -7,6 +7,9 @@ import { MainLayoutComponent} from './components/main-layout/main-layout.compone
 import { EnterpriseComponent } from './components/enterprise/enterprise.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
+import { RequestComponent } from './components/request/request.component';
+import { AgentComponent } from './components/agent/agent.component';
+import { TutorialAdminComponent } from './components/tutorial-admin/tutorial-admin.component';
 const routes: Routes = [
   {
     path: '',
@@ -26,6 +29,9 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeAdminComponent},
       { path: 'enterprise', component: EnterpriseComponent },
+      { path: 'request', component: RequestComponent },
+      { path: 'agent', component: AgentComponent },
+      { path: 'tutorial', component: TutorialAdminComponent },
     ]
   },
 ];

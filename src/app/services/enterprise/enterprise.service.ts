@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { EnterpriseModel } from 'src/app/models/Enterprise.model';
+import { EnterpriseModel, CreateEnterpriseModel } from 'src/app/models/Enterprise.model';
 import { tap } from 'rxjs/operators';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,15 @@ export class EnterpriseService {
         })
       );
   }
+
+  updateEntreprise(enterprise: EnterpriseModel){
+    return this.http.patch(this.uri + '/empresa', enterprise)
+  }
+  
+  postEnterprise(enterprise: CreateEnterpriseModel){
+    return this.http.post(this.uri + '/empresa', enterprise)
+  }
+
   saveEnterprise(entreprise: EnterpriseModel) {
     localStorage.setItem('idEmpresa', this.enterprise.idEmpresa.toString());
   }

@@ -23,12 +23,14 @@
       </div>
     </mat-card>
   </a>
-  <mat-card class="bg-green-700">
-    <div class="text-yellow-400 flex justify-center items-center">
-      <fa-icon [icon]="iconTutorial" size="4x" class=""></fa-icon>
-      <span class="text-4xl m-4"> Tutoriales</span>
-    </div>
-  </mat-card>
+  <a [routerLink]="['/admin/tutorial']">
+    <mat-card class="bg-green-700">
+      <div class="text-yellow-400 flex justify-center items-center">
+        <fa-icon [icon]="iconTutorial" size="4x" class=""></fa-icon>
+        <span class="text-4xl m-4"> Tutoriales</span>
+      </div>
+    </mat-card>
+  </a>
   <mat-card class="bg-green-700">
     <div class="text-yellow-400 flex justify-center items-center">
       <fa-icon [icon]="iconReport" size="4x" class=""></fa-icon>

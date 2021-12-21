@@ -7,3 +7,7 @@ export interface EnterpriseModel{
     licencia: string;
     fechaVencimiento: string;
 }
+
+export interface CreateEnterpriseModel extends Omit<EnterpriseModel,'idEmpresa'>{
+    clave: string
+}

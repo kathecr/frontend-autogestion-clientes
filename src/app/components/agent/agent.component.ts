@@ -1,78 +1,61 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  Inject,
-} from '@angular/core';
-import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {
-  CreateEnterpriseModel,
-  EnterpriseModel,
-} from 'src/app/models/Enterprise.model';
-import { EnterpriseService } from 'src/app/services/enterprise/enterprise.service';
+import { Component, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { faEdit, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { AgentModel, CreateAgentModel } from 'src/app/models/Agent.model';
+import { AgentService } from 'src/app/services/agent/agent.service';
 
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
-  styleUrls: ['./agent.component.css']
+  styleUrls: ['./agent.component.css'],
 })
 export class AgentComponent implements AfterViewInit {
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageEvent!: PageEvent;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  iconEnterprise = faBuilding;
+  iconAgent = faUserTie;
   faEdit = faEdit;
-  enterprises: EnterpriseModel[] = [];
+  agents: AgentModel[] = [];
   displayedColumns: string[] = [
     'position',
     'nombre',
-    'nit',
-    'celular',
+    'cedula',
     'correo',
-    'licencia',
-    'fechaVencimiento',
+    'estado',
+    'area',
     'edit',
   ];
 
   constructor(
-    private enterpriseService: EnterpriseService,
-
+    private agentService: AgentService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.updateEnterpriseTable();
+    this.updateAgentTable();
   }
 
-  updateEnterpriseTable() {
-    this.enterpriseService.getEnterpriseAll().subscribe((res: any) => {
-      this.enterprises = res;
+  updateAgentTable() {
+    this.agentService.getAgentAll().subscribe((res: any) => {
+      this.agents = res;
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
     });
   }
 
-  openEdit(enterprise: EnterpriseModel) {
+  openEdit(agent: AgentModel) {
     const dialogRef = this.dialog.open(EditAgent, {
       width: '500px',
-      data: enterprise,
+      data: agent,
     });
   }
 
@@ -82,7 +65,7 @@ export class AgentComponent implements AfterViewInit {
     });
     dialogRef
       .afterClosed()
-      .subscribe({ next: () => this.updateEnterpriseTable() });
+      .subscribe({ next: () => this.updateAgentTable() });
   }
 
   applyFilter(event: Event) {
@@ -96,17 +79,18 @@ export class AgentComponent implements AfterViewInit {
   templateUrl: 'created-agent.html',
 })
 export class CreatedAgent {
-  enterprise: CreateEnterpriseModel = {
-    nombre: '',
-    clave: '',
-    nit: '',
-    celular: '',
-    correo: '',
-    licencia: '',
-    fechaVencimiento: '',
-  };
+  agent : CreateAgentModel = {
+  nombre: "",
+  apellido: "",
+  correo: "",
+  estado: "",
+  cedula: "",
+  idArea: 0,
+  nombreArea: "",
+  }
   form: FormGroup = this.formBuilder.group({
     nombre: ['', [Validators.required]],
+    apellido: ['', [Validators.required]],
     nit: ['', [Validators.required]],
     celular: ['', [Validators.required]],
     clave: ['', [Validators.required]],
@@ -115,42 +99,27 @@ export class CreatedAgent {
     fecha: ['', [Validators.required]],
   });
 
-  pattern: string = '(^[0-9]+-{1}[0-9]{1})';
-
   constructor(
     public dialogRef: MatDialogRef<EditAgent>,
-    @Inject(MAT_DIALOG_DATA) public data: EnterpriseModel,
+    @Inject(MAT_DIALOG_DATA) public data: AgentModel,
     private formBuilder: FormBuilder,
-    private enterpriseService: EnterpriseService
+    private agentService: AgentService
   ) {}
 
   created() {
     const value = this.form.value;
-    this.enterprise.clave = value.clave;
-    this.enterprise.nombre = value.nombre;
-    this.enterprise.nit = value.nit.replace('-', '');
-    this.enterprise.celular = value.celular;
-    this.enterprise.correo = value.correo;
-    this.enterprise.licencia = value.licencia;
-    this.enterprise.clave = value.clave;
-    this.enterprise.fechaVencimiento = value.fecha;
-    this.enterpriseService.postEnterprise(this.enterprise).subscribe(data=>console.log("Creando empresa"));
+    this.agent.nombre = value.clave;
+    this.agent.apellido = value.nombre;
+    this.agent.correo = value.correo;
+    this.agent.cedula = value.celular;
+    this.agent.correo = value.correo;
+    this.agent.estado = value.estado;
+    this.agent.nombreArea = value.area;
+    this.agentService
+      .postAgent(this.agent)
+      .subscribe((data) => console.log('Creando empresa'));
     this.dialogRef.close();
   }
-
-  onUsernameChange(e: any) {
-    let username = this.form.controls.nit.value;
-    username = username.replace(/[a-zA-Z]+/gm, '');
-    if (username.length == 10 && Boolean(username[9].match(/[0-9]/g))) {
-      username = username.substring(0, 9) + '-' + username[9];
-    } else if (username[9] == '-' && username.length < 11) {
-      username = username.substring(0, 9);
-    } else if (username[9] != '-' && username.length == 11) {
-      username = username.substring(0, 9) + '-' + username[9];
-    }
-    this.form.controls.nit.setValue(username);
-  }
-
 }
 //------ COMPONENT EDIT ---------//
 @Component({
@@ -158,66 +127,40 @@ export class CreatedAgent {
   templateUrl: 'edit-agent.html',
 })
 export class EditAgent {
-  enterprise: EnterpriseModel = {
-    idEmpresa: 0,
-    nombre: '',
-    nit: '',
-    celular: '',
-    correo: '',
-    licencia: '',
-    fechaVencimiento: '',
-  };
+  agent !: AgentModel
   form: FormGroup = this.formBuilder.group({
     nombre: [this.data.nombre, [Validators.required]],
-    nit: [
-      this.data.nit.substring(0, 9) + '-' + this.data.nit[9],
-      [Validators.required],
-    ],
-    celular: [this.data.celular, [Validators.required]],
+    apellido: [this.data.apellido, [Validators.required]],
+    cedula: [this.data.cedula, [Validators.required]],
     correo: [this.data.correo, [Validators.required]],
-    licencia: [this.data.licencia, [Validators.required]],
-    fecha: [this.data.fechaVencimiento, [Validators.required]],
+    estado: [this.data.estado, [Validators.required]],
+    area: [this.data.nombreArea, [Validators.required]],
   });
-
-  pattern: string = '(^[0-9]+-{1}[0-9]{1})';
 
   constructor(
     public dialogRef: MatDialogRef<EditAgent>,
-    @Inject(MAT_DIALOG_DATA) public data: EnterpriseModel,
+    @Inject(MAT_DIALOG_DATA) public data: AgentModel,
     private formBuilder: FormBuilder,
-    private enterpriseService: EnterpriseService
+    private agentService: AgentService
   ) {}
 
   ngOnInit(): void {
-    this.enterprise = this.data;
+    this.agent = this.data;
   }
 
   edit() {
     const value = this.form.value;
-    this.enterprise.idEmpresa = this.data.idEmpresa;
-    this.enterprise.nombre = value.nombre;
-    this.enterprise.nit = value.nit.replace('-', '');
-    this.enterprise.celular = value.celular;
-    this.enterprise.correo = value.correo;
-    this.enterprise.licencia = value.licencia;
-
-    this.enterpriseService
-      .updateEntreprise(this.enterprise)
+    this.agent.nombre = value.nombre;
+    this.agent.apellido = value.apellido;
+    this.agent.cedula = value.cedula;
+    this.agent.correo = value.correo;
+    this.agent.estado = value.estado;
+    this.agent.nombreArea = value.area;
+    this.agentService
+      .updateAgent(this.agent)
       .subscribe({ next: () => {} });
 
     this.dialogRef.close();
   }
 
-  onUsernameChange(e: any) {
-    let username = this.form.controls.nit.value;
-    username = username.replace(/[a-zA-Z]+/gm, '');
-    if (username.length == 10 && Boolean(username[9].match(/[0-9]/g))) {
-      username = username.substring(0, 9) + '-' + username[9];
-    } else if (username[9] == '-' && username.length < 11) {
-      username = username.substring(0, 9);
-    } else if (username[9] != '-' && username.length == 11) {
-      username = username.substring(0, 9) + '-' + username[9];
-    }
-    this.form.controls.nit.setValue(username);
-  }
 }

@@ -1,0 +1,86 @@
+<div>
+  <form class="w-full" [formGroup]="form" (ngSubmit)="edit()">
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input
+          autocomplete="off"
+          placeholder="Nombre"
+          formControlName="nombre"
+          maxlength="20"
+          matInput
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Apellido</mat-label>
+        <input
+          matInput
+          autocomplete="off"
+          placeholder="Apellido"
+          formControlName="apellido"
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Cedula</mat-label>
+        <input
+          placeholder="Celular"
+          autocomplete="off"
+          formControlName="cedula"
+          maxlength="10"
+          minlength="10"
+          matInput
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input
+          placeholder="Correo"
+          formControlName="correo"
+          autocomplete="off"
+          matInput
+          type="email"
+        />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option value="activo">Activo</mat-option>
+        <mat-option value="inactivo">Inactivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Area</mat-label>
+      <mat-select formControlName="area">
+        <mat-option value="Nomina">Nomina</mat-option>
+        <mat-option value="Activos">Activos</mat-option>
+        <mat-option value="Pasivos">Pasivos</mat-option>
+        <mat-option value="Caja Menor">Caja Menor</mat-option>
+        <mat-option value="Inversiones">Inversiones</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="mt-4">
+      <button
+        class="w-full text-green-800 bg-yellow-300"
+        mat-button
+        mat-raised-button
+        [disabled]="!form.valid"
+        type="submit"
+      >
+        Actualizar
+      </button>
+    </div>
+  </form>
+</div>

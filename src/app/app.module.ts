@@ -34,8 +34,11 @@ import { TutorialDetailsComponent, Qualifier } from './components/tutorial-detai
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AdminLayoutComponent } from './components/admin-layout/admin-layout.component';
-import { EnterpriseComponent } from './components/enterprise/enterprise.component';
+import { CreatedEnterprise, EditEnterprise, EnterpriseComponent } from './components/enterprise/enterprise.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { EditRequest, RequestComponent } from './components/request/request.component';
+import { AgentComponent, CreatedAgent, EditAgent } from './components/agent/agent.component';
+import { TutorialAdminComponent } from './components/tutorial-admin/tutorial-admin.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +49,17 @@ import { HomeAdminComponent } from './components/home-admin/home-admin.component
     StartRatingComponent,
     TutorialDetailsComponent,
     Qualifier,
+    EditEnterprise,
+    CreatedEnterprise,
+    EditRequest,
+    EditAgent,
+    CreatedAgent,
     AdminLayoutComponent,
     EnterpriseComponent,
-    HomeAdminComponent
+    HomeAdminComponent,
+    RequestComponent,
+    AgentComponent,
+    TutorialAdminComponent
   ],
   entryComponents: [StartRatingComponent],
   imports: [
